@@ -1,0 +1,17 @@
+{
+  "name": "socket-chat",
+  "version": "1.0.0",
+  "description": "chat room with websockets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sockets",
+    "node",
+    "express",
+    "chat"
+  ],
+  "author": "Neil Lobo",
+  "license": "ISC"
+}
