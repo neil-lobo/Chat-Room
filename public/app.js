@@ -19,6 +19,7 @@ function setup()
 
 	socket.on("set_connections", function(data)
 	{
+		connections = [];
 		for(let i = 0; i < data.connections.length; i++)
 		{
 			connections[i] = data.connections[i];
