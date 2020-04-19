@@ -46,10 +46,62 @@ app.get("/chat", function(req,res) {
 })
 
 io.sockets.on("connection", function(socket) {
+	console.log("[SOCKET CONNECTED] id: " + socket.id);
 	connections.push({"id":socket.id});
-	console.log("[NEW SOCKET] id: " + socket.id);
+
+	socket.on("disconnect", function() {
+		console.log("[SOCKET DISCONNECTED] " + connection_toString(connections[indexOfID(socket.id)]));
+		connections.splice(indexOfID(socket.id), 1);
+	});
 
 	socket.on("update_name", function(data) {
-		connections[connections.indexOf(data.id)].name = data.name;
+		connections[indexOfID(socket.id)].name = data.name;
+	});
+
+	socket.on("get_name", function()
+	{
+		io.to(socket.id).emit("set_name", {
+			"name": connections[indexOfID(socket.id)].name
+		})
+	});
+
+	socket.on("get_connections", function()
+	{
+		let _connections = [];
+		for (let i = 0; i < connections.length; i++)
+		{
+			_connections[i] = connections[i]
+		}
+
+		io.to(socket.id).emit("set_connections", {
+			"connections": _connections
+		})
 	});
 });
+
+function indexOfID(id)
+{
+	for(let i = 0; i < connections.length; i++)
+	{	
+		let connection = connections[i];
+		if (id == connection.id)
+		{	
+			return i;
+		}
+	}
+
+	return undefined;
+}
+
+function print_connections()
+{
+	for (let i = 0; i < connections.length; i++)
+	{
+		console.log(connections[i].id + " : " + connections[i].name);
+	}
+}
+
+function connection_toString(connection)
+{
+	return("{'id':'" + connection.id + "', 'name':'" + connection.name + "'}")
+}
