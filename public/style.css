@@ -41,12 +41,12 @@
 
 #canvas_div
 {
-	grid-area: "canvas";
+	grid-area: canvas;
 }
 
 #message_form_container
 {
-	grid-area: "form";
+	grid-area: form;
 	margin: 20 0 20 0;
 }
 
