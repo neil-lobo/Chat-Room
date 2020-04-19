@@ -26,7 +26,8 @@ function setup()
 		}
 	});
 
-	createCanvas(500,500);
+	var canvas = createCanvas(500,500);
+	canvas.parent("canvas_div");
 }
 
 function draw()

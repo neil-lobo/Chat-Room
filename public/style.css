@@ -1,0 +1,61 @@
+.form_message
+{
+	display: flex;
+	background: red;
+	width:500px;
+	/*height: 50px;*/
+}
+
+.message_input input
+{
+	width: 100%;
+}
+
+.message_input
+{
+	float: left;
+	width: 75%;
+	background:green;
+}
+
+.send_message_button
+{
+	float: right;
+	width: 25%;
+	background:blue;
+}
+
+.send_message_button button
+{	
+	width: 100%;
+}
+
+#app
+{
+	display: inline-grid;
+	grid-template-areas: 	"canvas"
+							"form";
+	background:#222222;
+	padding:10 10 0 10;
+}
+
+#canvas_div
+{
+	grid-area: "canvas";
+}
+
+#message_form_container
+{
+	grid-area: "form";
+	margin: 20 0 20 0;
+}
+
+#message_form_container form
+{
+	margin: 0px;
+}
+
+body
+{
+	/*margin: 0px;*/
+}

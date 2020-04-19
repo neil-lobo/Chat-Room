@@ -4,3 +4,16 @@ html
 		script(src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js")
 		script(src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js")
 		script(src = "static/app.js")
+		link(rel="stylesheet" href="static/style.css")
+	body
+		div#app
+			div#canvas_div
+			div#message_form_container
+				form(action = "/chat", method = "POST")
+					div.form_message
+						div.message_input
+							lable(for = "message") 
+							input(name = "message" required)
+						div.send_message_button
+							button(type = "submit") Send!
+							
