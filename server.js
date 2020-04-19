@@ -7,22 +7,25 @@ var upload = multer();
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended:true}));
 app.use(upload.array());
+app.use("/static", express.static("public"));
 app.set("view engine", "pug");
-app.set("views", "./views")
+app.set("views", "./views");
 
-app.listen(process.env.PORT || 3000);
+var server = app.listen(process.env.PORT || 3000);
+var socket = require("socket.io");
+var io = socket(server)
+
+var connections = []
 
 app.get("/", function(req,res) {
 	res.render("login");
 });
 
 app.post("/", function(req,res) {
-	console.log(req.body);
 	res.redirect("/chat?name=" + req.body.name);
 });
 
 app.get("/chat", function(req,res) {
-	console.log(req.query);
 	try
 	{
 		if (req.query.name == "" || req.query.name == undefined)
@@ -41,3 +44,12 @@ app.get("/chat", function(req,res) {
 		res.redirect("/");
 	}
 })
+
+io.sockets.on("connection", function(socket) {
+	connections.push({"id":socket.id});
+	console.log("[NEW SOCKET] id: " + socket.id);
+
+	socket.on("update_name", function(data) {
+		connections[connections.indexOf(data.id)].name = data.name;
+	});
+});
