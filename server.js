@@ -16,6 +16,11 @@ app.get("/", function(req,res) {
 	res.render("login");
 });
 
+app.post("/", function(req,res) {
+	console.log(req.body);
+	res.redirect("/chat?name=" + req.body.name);
+});
+
 app.get("/chat", function(req,res) {
 	console.log(req.query);
 	try
