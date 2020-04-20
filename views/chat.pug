@@ -12,7 +12,7 @@ html
 				div.form_message
 					div.message_input
 						lable(for = "message") 
-						input#inputsubmit(name = "message" autofocus onkeypress="submit_form_enter(event)")
+						input#inputsubmit(name = "message" autocomplete="off" autofocus onkeypress="submit_form_enter(event)")
 					div.send_message_button
 						input#btnsubmit(type="button" value="Send!" onclick="submit_form()")
 							
