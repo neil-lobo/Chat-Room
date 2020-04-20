@@ -1,6 +1,7 @@
 var socket;
 var name;
 var connections = [];
+var messages = [];
 
 function setup()
 {
@@ -26,6 +27,10 @@ function setup()
 		}
 	});
 
+	socket.on("new_message", function(data) {
+		messages.push(data);
+	});
+
 	var canvas = createCanvas(500,500);
 	canvas.parent("canvas_div");
 }
@@ -36,4 +41,27 @@ function draw()
 	socket.emit("get_connections");
 
 	background(51);
+}
+
+function submit_form()
+{
+	let input = document.getElementById("inputsubmit");
+	if (input.value != "")
+	{
+		socket.emit("send_message", {
+			"message":input.value
+		});
+		input.value = "";
+	}
+
+}
+
+function submit_form_enter(event)
+{
+	const ENTER = 13
+
+	if (event.keyCode == ENTER)
+	{
+		submit_form();
+	}
 }

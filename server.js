@@ -43,7 +43,12 @@ app.get("/chat", function(req,res) {
 	{
 		res.redirect("/");
 	}
-})
+});
+
+app.post("/chat", function(req, res, next) {
+	console.log(req.body);
+	next();
+});
 
 io.sockets.on("connection", function(socket) {
 	console.log("[SOCKET CONNECTED] id: " + socket.id);
@@ -76,6 +81,14 @@ io.sockets.on("connection", function(socket) {
 		io.to(socket.id).emit("set_connections", {
 			"connections": _connections
 		})
+	});
+
+	socket.on("send_message", function(data) {
+		io.emit("new_message", {
+			"message":data.message,
+			"name": connections[indexOfID(socket.id)].name,
+			"id": socket.id
+		});
 	});
 });
 
