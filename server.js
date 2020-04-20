@@ -16,6 +16,7 @@ var socket = require("socket.io");
 var io = socket(server)
 
 var connections = []
+var recent_messages = [] //holds last 100 messages from the time server starts
 
 app.get("/", function(req,res) {
 	res.render("login");
@@ -84,11 +85,14 @@ io.sockets.on("connection", function(socket) {
 	});
 
 	socket.on("send_message", function(data) {
-		io.emit("new_message", {
+		
+		_data = {
 			"message":data.message,
 			"name": connections[indexOfID(socket.id)].name,
 			"id": socket.id
-		});
+		}
+		remeber_message(_data);
+		io.emit("new_message", _data);
 	});
 });
 
@@ -117,4 +121,13 @@ function print_connections()
 function connection_toString(connection)
 {
 	return("{'id':'" + connection.id + "', 'name':'" + connection.name + "'}")
+}
+
+function remeber_message(data)
+{
+	if (recent_messages.length > 100)
+	{
+		recent_messages.splice(0,1);
+	}
+	recent_messages.push(data);
 }
