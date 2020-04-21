@@ -1,0 +1,8 @@
+--------- THINGS TO ADD ---------
++ scoll bar to view off-screen messages
++ add accounts
+	↳ store account details on database in plain text for now
+		↳ change login page from just a name to an account login on the same screen as the chatroom
+			↳ encrypt account details
+
++ fork repo and change front end to angular to complete MEAN stack
