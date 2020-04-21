@@ -38,8 +38,6 @@ function setup()
 		messages.push(data);
 		bubbles.push(new ChatBubble(data));
 
-		background(51);
-		draw_message_bubbles();
 	});
 
 	var canvas = createCanvas(500,500);
@@ -51,6 +49,8 @@ function draw()
 {
 	socket.emit("get_name");
 	socket.emit("get_connections");
+	background(51);
+	draw_message_bubbles();
 }
 
 function submit_form()
