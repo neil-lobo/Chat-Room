@@ -2,6 +2,13 @@ var socket;
 var name;
 var connections = [];
 var messages = [];
+var bubbles = [];
+var font;
+
+function preload()
+{
+	font = loadFont("/static/arial.ttf");
+}
 
 function setup()
 {
@@ -29,6 +36,7 @@ function setup()
 
 	socket.on("new_message", function(data) {
 		messages.push(data);
+		bubbles.push(new ChatBubble(data));
 	});
 
 	var canvas = createCanvas(500,500);
@@ -41,6 +49,7 @@ function draw()
 	socket.emit("get_connections");
 
 	background(51);
+	draw_message_bubbles();
 }
 
 function submit_form()
@@ -64,4 +73,17 @@ function submit_form_enter(event)
 	{
 		submit_form();
 	}
+}
+
+function draw_message_bubbles()
+{
+	for(let i = 0; i < bubbles.length; i++)
+	{
+		draw_bubble(bubbles[i], /*height-bubbles[i].height-15*/ 100)
+	}
+}
+
+function draw_bubble(bubble, rel)
+{
+	bubble.draw(rel)
 }

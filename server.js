@@ -46,11 +46,6 @@ app.get("/chat", function(req,res) {
 	}
 });
 
-app.post("/chat", function(req, res, next) {
-	console.log(req.body);
-	next();
-});
-
 io.sockets.on("connection", function(socket) {
 	console.log("[SOCKET CONNECTED] id: " + socket.id);
 	connections.push({"id":socket.id});
