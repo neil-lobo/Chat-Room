@@ -4,6 +4,7 @@ var connections = [];
 var messages = [];
 var bubbles = [];
 var font;
+var scroll = 0;
 
 function preload()
 {
@@ -53,6 +54,43 @@ function draw()
 	draw_message_bubbles();
 }
 
+function mouseWheel(event)
+{
+	// if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
+	// {
+	// 	if (event.delta <= 0 && bubbles[0].y < 15) //scroll up
+	// 	{
+	// 		scroll += event.delta;
+	// 	}
+	// 	else if (event.delta > 0/* && bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height < height-15*/) //scroll down
+	// 	{
+	// 		scroll += event.delta;
+	// 	}
+	// }
+}
+
+function mouseDragged(event)
+{
+	if (bubbles.length > 0)
+	{
+		// console.log(event);
+		if (event.movementY >= 0) //scroll up
+		{
+			if (bubbles[0].y < 15)
+			{
+				scroll -= event.movementY;
+			}
+		}
+		else if (event.movementY < 0) //scroll down
+		{
+			if (bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height > height-15)
+			{	
+				scroll -= event.movementY;
+			}
+		}
+	}
+}
+
 function submit_form()
 {
 	let input = document.getElementById("inputsubmit");
@@ -82,11 +120,19 @@ function draw_message_bubbles()
 	{
 		if (i == bubbles.length-1)
 		{
-			bubbles[i].draw(height-bubbles[i].height-15);
+			bubbles[i].draw(height-bubbles[i].height-15-scroll);
 		}
 		else
 		{
 			bubbles[i].draw(bubbles[i+1].y-bubbles[i].height-5);
+		}
+	}
+
+	if(bubbles.length > 0)
+	{
+		if(bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height < height-15)
+		{
+			scroll = 0;
 		}
 	}
 }
