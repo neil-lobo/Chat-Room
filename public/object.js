@@ -6,16 +6,15 @@ function ChatBubble(message_data)
 	this.width = 470;
 	this.height;
 	this.colour;
+	
+	// this.initialize = function(y)
+	// {
+	// 	this.y = y
+	// }
 
 	this.draw = function(y)
 	{
-		this.y = y
-
-		let message = this.format_text(this.data.message);
-		message.push(name);
-		let first = font.textBounds(message[0], this.x + 7, this.y + 18);
-		let last = font.textBounds(message[message.length-1], this.x + 7, this.y + 17*(message.length-1));
-		this.height = last.y+last.h-first.y + 30;
+		this.y = y;
 
 		stroke(0);
 		strokeWeight(1);
@@ -33,15 +32,14 @@ function ChatBubble(message_data)
 		fill(255);
 		textFont('Arial');
 		textSize(15);
-		// strokeWeight(0.5);
 		noStroke();
-		for(let i = 0; i < message.length; i++)
+		for(let i = 0; i < this.message.length; i++)
 		{
-			if (i == message.length-1)
+			if (i == this.message.length-1)
 			{
 				fill(160);
 			}
-			text(message[i], this.x + 7, this.y + 18 + i*17);
+			text(this.message[i], this.x + 7, this.y + 18 + i*17);
 		}
 	}
 
@@ -78,4 +76,11 @@ function ChatBubble(message_data)
 
 		return str_list;
 	}
+
+	this.message = this.format_text(this.data.message);
+	this.message.push(name);
+	let first = font.textBounds(this.message[0], 7, 18);
+	let last = font.textBounds(this.message[this.message.length-1], 7, 17*(this.message.length-1));
+	this.height = last.y+last.h-first.y + 30;
+	
 }

@@ -37,19 +37,20 @@ function setup()
 	socket.on("new_message", function(data) {
 		messages.push(data);
 		bubbles.push(new ChatBubble(data));
+
+		background(51);
+		draw_message_bubbles();
 	});
 
 	var canvas = createCanvas(500,500);
 	canvas.parent("canvas_div");
+	background(51);
 }
 
 function draw()
 {
 	socket.emit("get_name");
 	socket.emit("get_connections");
-
-	background(51);
-	draw_message_bubbles();
 }
 
 function submit_form()
@@ -77,13 +78,15 @@ function submit_form_enter(event)
 
 function draw_message_bubbles()
 {
-	for(let i = 0; i < bubbles.length; i++)
+	for(let i = bubbles.length-1; i >= 0; i--)
 	{
-		draw_bubble(bubbles[i], /*height-bubbles[i].height-15*/ 100)
+		if (i == bubbles.length-1)
+		{
+			bubbles[i].draw(height-bubbles[i].height-15);
+		}
+		else
+		{
+			bubbles[i].draw(bubbles[i+1].y-bubbles[i].height-5);
+		}
 	}
-}
-
-function draw_bubble(bubble, rel)
-{
-	bubble.draw(rel)
 }
