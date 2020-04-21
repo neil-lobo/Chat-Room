@@ -78,7 +78,7 @@ function ChatBubble(message_data)
 	}
 
 	this.message = this.format_text(this.data.message);
-	this.message.push(name);
+	this.message.push(this.data.name);
 	let first = font.textBounds(this.message[0], 7, 18);
 	let last = font.textBounds(this.message[this.message.length-1], 7, 17*(this.message.length-1));
 	this.height = last.y+last.h-first.y + 30;
