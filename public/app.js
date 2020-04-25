@@ -136,3 +136,15 @@ function draw_message_bubbles()
 		}
 	}
 }
+
+
+// function run()
+// {
+// 	setup();
+// 	while(true) draw();
+// }
+
+// if (require.main === module)
+// {
+// 	run();
+// }
