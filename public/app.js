@@ -57,6 +57,7 @@ function setup()
 	});
 
 	noCanvas();
+	set_form();
 }
 
 function draw()
@@ -64,28 +65,17 @@ function draw()
 	socket.emit("get_name");
 	socket.emit("get_connections");
 }
-/*
-function mouseDragged(event)
+
+function set_form()
 {
-	if (bubbles.length > 0)
-	{
-		// console.log(event);
-		if (event.movementY >= 0) //scroll up
-		{
-			if (bubbles[0].y < 15)
-			{
-				scroll -= event.movementY;
-			}
-		}
-		else if (event.movementY < 0) //scroll down
-		{
-			if (bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height > height-15)
-			{	
-				scroll -= event.movementY;
-			}
-		}
-	}
-}*/
+	const form = document.querySelector("form.form_message");
+
+	form.addEventListener("submit", function(evert) {
+		event.preventDefault();
+		console.log("form");
+		submit_form();
+	});
+}
 
 function submit_form()
 {
@@ -104,40 +94,6 @@ function submit_form()
 		chat_area.scrollTop = 0;
 	}
 }
-
-function submit_form_enter(event)
-{
-	const ENTER = 13
-
-	if (event.keyCode == ENTER)
-	{
-		submit_form();
-	}
-}
-
-/*function draw_message_bubbles()
-{
-	for(let i = bubbles.length-1; i >= 0; i--)
-	{
-		if (i == bubbles.length-1)
-		{
-			bubbles[i].draw(height-bubbles[i].height-15-scroll);
-		}
-		else
-		{
-			bubbles[i].draw(bubbles[i+1].y-bubbles[i].height-5);
-		}
-	}
-
-	if(bubbles.length > 0)
-	{
-		if(bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height < height-15)
-		{
-			scroll = 0;
-		}
-	}
-}*/
-
 
 // function run()
 // {

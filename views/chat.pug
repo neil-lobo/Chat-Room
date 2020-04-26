@@ -9,10 +9,10 @@ html
 		div#app
 			div#canvas_div
 			div#message_form_container
-				div.form_message
+				form.form_message
 					div.message_input
 						lable(for = "message") 
-						input#inputsubmit(name = "message" autocomplete="off" autofocus onkeypress="submit_form_enter(event)")
+						input#inputsubmit(name = "message" autocomplete="off" autofocus)
 					div.send_message_button
-						input#btnsubmit(type="button" value="Send!" onclick="submit_form()")
+						button#btnsubmit Send!
 							
