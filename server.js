@@ -1,8 +1,8 @@
-var express = require("express");
-var app = express();
-var body_parser = require("body-parser");
-var multer = require("multer");
-var upload = multer();
+let express = require("express");
+let app = express();
+let body_parser = require("body-parser");
+let multer = require("multer");
+let upload = multer();
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended:true}));
@@ -11,12 +11,12 @@ app.use("/static", express.static("public"));
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-var server = app.listen(process.env.PORT || 3000);
-var socket = require("socket.io");
-var io = socket(server)
+let server = app.listen(process.env.PORT || 3000);
+let socket = require("socket.io");
+let io = socket(server)
 
-var connections = []
-var recent_messages = [] //holds last 100 messages from the time server starts
+let connections = []
+let recent_messages = [] //holds last 100 messages from the time server starts
 
 app.get("/", function(req,res) {
 	res.render("login");

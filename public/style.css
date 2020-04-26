@@ -36,22 +36,77 @@
 	grid-template-areas: 	"canvas"
 							"form";
 	background:#222222;
-	padding:10 10 0 10;
+	padding:10px 10px 0px 10px;
 	border-radius: 5px;
+}
+
+/* width */
+#app ::-webkit-scrollbar
+{
+  width: 5px;
+}
+
+/* Track */
+#app ::-webkit-scrollbar-track
+{
+
+}
+ 
+/* Handle */
+#app ::-webkit-scrollbar-thumb
+{
+  background: #888; 
+}
+
+/* Handle on hover */
+#app ::-webkit-scrollbar-thumb:hover
+{
+  background: #555;
 }
 
 #canvas_div
 {
 	grid-area: canvas;
+	background: #333333;
+	width: 500px;
+	height: 500px;
+	overflow-y: hidden;
+
+}
+
+#canvas_div:hover
+{
+	overflow-y: auto;
 }
 
 #message_form_container
 {
 	grid-area: form;
-	margin: 20 0 20 0;
+	margin: 20px 0px 20px 0px;
+}
+
+.chat_bubble
+{
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid black;
+	border-radius: 6px;
+	background: rgb(80,80,80);
+}
+
+.bubble_message
+{
+	margin: 2px;
+}
+
+.bubble_sender
+{
+	margin: 2px;
+	color: rgb(160,160,160);
+	font-size: 12px;
 }
 
 body
 {
-	/*margin: 0px;*/
+	font-family: 'arial'
 }

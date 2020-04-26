@@ -1,19 +1,14 @@
-var socket;
-var name;
-var connections = [];
-var messages = [];
-var bubbles = [];
-var font;
-var scroll = 0;
-
-function preload()
-{
-	font = loadFont("/static/arial.ttf");
-}
+let socket;
+let name;
+let connections = [];
+let messages = [];
+let bubbles = [];
+let font;
+let pause_scroll = false;
 
 function setup()
 {
-	var url = getURL();
+	let url = getURL();
 	name = url.slice(url.indexOf("?name=") + 6);
 
 	socket = io.connect();
@@ -37,38 +32,39 @@ function setup()
 
 	socket.on("new_message", function(data) {
 		messages.push(data);
-		bubbles.push(new ChatBubble(data));
+		let chat_area = document.getElementById("canvas_div");
+		let chat_bubble = document.createElement("div");
+		let bubble_message = document.createElement("p");
+		let message = document.createTextNode(data.message);
+		let bubble_sender = document.createElement("p");
+		let name = document.createTextNode(data.name);
+
+		chat_bubble.setAttribute("class", "chat_bubble");
+		bubble_message.setAttribute("class", "bubble_message");
+		bubble_sender.setAttribute("class", "bubble_sender");
+
+		if (data.id == socket.id)
+		{
+			chat_bubble.style.background = "rgb(0, 82, 42)"
+		}
+
+		bubble_message.appendChild(message);
+		bubble_sender.appendChild(name);
+		chat_bubble.appendChild(bubble_message);
+		chat_bubble.appendChild(bubble_sender);
+		chat_area.insertBefore(chat_bubble, chat_area.childNodes[0]);
 
 	});
 
-	var canvas = createCanvas(500,500);
-	canvas.parent("canvas_div");
-	background(51);
+	noCanvas();
 }
 
 function draw()
 {
 	socket.emit("get_name");
 	socket.emit("get_connections");
-	background(51);
-	draw_message_bubbles();
 }
-
-function mouseWheel(event)
-{
-	// if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
-	// {
-	// 	if (event.delta <= 0 && bubbles[0].y < 15) //scroll up
-	// 	{
-	// 		scroll += event.delta;
-	// 	}
-	// 	else if (event.delta > 0/* && bubbles[bubbles.length-1].y + bubbles[bubbles.length-1].height < height-15*/) //scroll down
-	// 	{
-	// 		scroll += event.delta;
-	// 	}
-	// }
-}
-
+/*
 function mouseDragged(event)
 {
 	if (bubbles.length > 0)
@@ -89,7 +85,7 @@ function mouseDragged(event)
 			}
 		}
 	}
-}
+}*/
 
 function submit_form()
 {
@@ -102,6 +98,11 @@ function submit_form()
 		input.value = "";
 	}
 
+	let chat_area = document.getElementById("canvas_div");
+	if (!pause_scroll)
+	{
+		chat_area.scrollTop = 0;
+	}
 }
 
 function submit_form_enter(event)
@@ -114,7 +115,7 @@ function submit_form_enter(event)
 	}
 }
 
-function draw_message_bubbles()
+/*function draw_message_bubbles()
 {
 	for(let i = bubbles.length-1; i >= 0; i--)
 	{
@@ -135,7 +136,7 @@ function draw_message_bubbles()
 			scroll = 0;
 		}
 	}
-}
+}*/
 
 
 // function run()
@@ -144,7 +145,4 @@ function draw_message_bubbles()
 // 	while(true) draw();
 // }
 
-// if (require.main === module)
-// {
-// 	run();
-// }
+// run();
