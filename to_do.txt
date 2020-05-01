@@ -1,4 +1,5 @@
 ----------- THINGS TO DO -----------
++++ change messages from sockets to post requests
 + change design of scrollbar
 + add accounts
 	↳ store account details on database in plain text for now
