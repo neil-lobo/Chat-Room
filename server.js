@@ -157,20 +157,47 @@ async function connect_to_db(task, data)
 
 async function new_user(db, data)
 {
+	if (is_valid_new_user(db, data))
+	{
+		try
+		{
+			await db.insertOne(
+				{
+					"username": data.username,
+					"password": data.password
+				}
+			);
+
+			console.log("[MONGODB] added new user!");
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+	}
+	else
+	{
+		console.error("NOT A VALID USER!");
+	}
+
+}
+
+async function is_valid_new_user(db, data)
+{
 	try
 	{
-		await db.insertOne(
-			{
-				"username": data.username,
-				"password": data.password
-			}
-		);
-
-		console.log("[MONGODB] added new user!");
+		if (await db.findOne({"username": data.username}))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	catch(err)
 	{
-		console.error(err);
+		console.error(err)
+		return false;
 	}
-
 }
