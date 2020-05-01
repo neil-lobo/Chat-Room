@@ -3,6 +3,8 @@ let app = express();
 let body_parser = require("body-parser");
 let multer = require("multer");
 let upload = multer();
+require('dotenv').config();
+let MongoClient = require('mongodb').MongoClient
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended:true}));
@@ -125,4 +127,50 @@ function remeber_message(data)
 		recent_messages.splice(0,1);
 	}
 	recent_messages.push(data);
+}
+
+async function connect_to_db(task, data)
+{
+	const client = new MongoClient(process.env.DB_STRING, { useUnifiedTopology: true }) //useUnifiedTopolgy is to get around depreciation
+	try
+	{
+		await client.connect();
+		console.log("[MONGODB] Connected to cluster!");
+
+		let db = client.db("mongo_test").collection("test_collection");
+
+		await task(db, data);
+
+	}
+	catch(err)
+	{
+		console.error(err);
+	}
+	finally
+	{
+		await client.close();
+		console.log("[MONGODB] Closed cluster connection!");
+	}
+}
+
+// connect_to_db(new_user, {"username": "neil", "password": "apple"});
+
+async function new_user(db, data)
+{
+	try
+	{
+		await db.insertOne(
+			{
+				"username": data.username,
+				"password": data.password
+			}
+		);
+
+		console.log("[MONGODB] added new user!");
+	}
+	catch(err)
+	{
+		console.error(err);
+	}
+
 }
